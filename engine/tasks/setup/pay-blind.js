@@ -11,7 +11,11 @@ Task.name = "Pay Blinds";
 Task.shouldRun = isRunning;
 
 Task.run =
-  (_, { gamestate }) => {
+  (LOGGER, { gamestate }) => {
+    const { sb, ante } = gamestate;
+    const bb = sb * 2;
+    LOGGER.info(`Blinds are ${sb}/${bb} (${ante})`, { tag: gamestate.handUniqueId });
+
     const indexSB = nextActive(gamestate.players, gamestate.dealerPosition);
 
     gamestate.players[indexSB].pay(gamestate, gamestate.sb);

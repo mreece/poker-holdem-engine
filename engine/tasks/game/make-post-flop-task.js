@@ -57,7 +57,7 @@ const makePostFlopTask =
 
           await tournament.onFeed(gamestate);
 
-          LOGGER.debug(`New common card: ${card.rank + card.type}.`, { tag: gamestate.handUniqueId });
+          LOGGER.info(`New common card: ${card.rank + card.type}.`, { tag: gamestate.handUniqueId });
         }
       };
 

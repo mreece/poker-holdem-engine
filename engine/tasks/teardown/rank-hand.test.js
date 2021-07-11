@@ -5,11 +5,9 @@
 const task = require("./rank-hand");
 const getPlayerFactory = require("../../../domain/player/create");
 
-describe("showdown", () => {
-  const LOGGER = {
-    info: jest.fn(),
-  };
+const LOGGER = { warn: jest.fn(), info: jest.fn(), debug: jest.fn() };
 
+describe("showdown", () => {
   const create = getPlayerFactory(LOGGER, () => {}, { BUYIN: 100 });
 
   it("does nothing when there's only one active player", async () => {

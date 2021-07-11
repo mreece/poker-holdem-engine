@@ -55,11 +55,11 @@ Task.run =
     const log = gamestate.handRank
       .reduce(
         (msg, entry) =>
-          `${msg}* ${format(entry.bestCardsInfo)}\n`,
+          `${msg}* ${format(entry.bestCardsInfo)} ${JSON.stringify(entry)}\n`,
         ""
       );
 
-    LOGGER.info(`Hand rank:\n${log}`, { tag: gamestate.handUniqueId });
+    LOGGER.debug(`Hand rank:\n${log}`, { tag: gamestate.handUniqueId });
   };
 
 module.exports = Task;

@@ -45,6 +45,8 @@ Task.run =
               return player.chipsBet >= sidepot.minChipsBet;
             });
 
+          // console.log({ sidepotContenders }, gamestate);
+
           if (!sidepotContenders[0].exequo) {
             return assignChips(gamestate, sidepotContenders[0].playerId, sidepot.pot);
           }

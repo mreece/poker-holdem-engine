@@ -18,8 +18,10 @@ const launchBotServices =
 
         const settings = {
           cwd: childWorkingDirectory,
+          maxBuffer: 10 * 1024 * 1024,
           env: {
             PORT: port,
+            ...process.env,
           },
         };
 
@@ -78,8 +80,8 @@ const startTournament =
 
     // Testing pause/resume is working.
     // Issue #6
-    setTimeout(pause, 1000, thread);
-    setTimeout(resume, 10000, thread);
+    // setTimeout(pause, 1000, thread);
+    // setTimeout(resume, 10000, thread);
   };
 
 launchBotServices();

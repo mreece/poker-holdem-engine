@@ -20,7 +20,7 @@ Task.run =
         return msg;
       }, "");
 
-    LOGGER.info(`State after betting session:\n${message.trim()}`, { tag: gamestate.handUniqueId });
+    LOGGER.debug(`State after betting session:\n${message.trim()}`, { tag: gamestate.handUniqueId });
   };
 
 module.exports = Task;

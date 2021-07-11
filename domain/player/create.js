@@ -1,9 +1,11 @@
 "use strict";
 
 const send = require("request");
+const chalk = require("chalk");
 
 const getAllCombination = require("@botpoker/all-combs");
 const sortByRank = require("@botpoker/rank-hands");
+const sortCards = require("@botpoker/hand/lib/utils/sort-by-rank");
 
 const States = require("./states");
 const splitPot = require("./split-pot");
@@ -74,7 +76,7 @@ module.exports =
 
         await save(gamestate);
 
-        LOGGER.info(`${this.name} has fold.`, { tag: gamestate.handUniqueId });
+        LOGGER.info(`${this.name} folds.`, { tag: gamestate.handUniqueId });
       },
 
       /**
@@ -154,7 +156,9 @@ module.exports =
 
         await save(gamestate);
 
-        LOGGER.debug(`${this.name} has bet ${amount}.`, { tag: gamestate.handUniqueId });
+        const action = amount === playerCallAmount ? "calls" : "raises";
+
+        LOGGER.info(`${this.name} ${action} ${amount}.`, { tag: gamestate.handUniqueId });
       },
 
       /**
@@ -193,7 +197,9 @@ module.exports =
         const bestPoint =
           sortByRank(combinations)[0];
 
-        LOGGER.info(`${this.name}: ${formatPoint(bestPoint.rank)}.`, { tag: gamestate.handUniqueId });
+        const short = (cards) => sortCards(cards).map(({ rank, type }) => `${rank}${type.toLowerCase()}`).join(" ");
+
+        LOGGER.info(`${chalk.bold(this.name)}: shows [${chalk.bold(short(this.cards))}] for ${chalk.bold(formatPoint(bestPoint.rank))} (${short(bestPoint)}).`, { tag: gamestate.handUniqueId });
 
         return bestPoint;
       },

@@ -3,6 +3,7 @@
 "use strict";
 
 const getPlayerFactory = require("./create");
+const LOGGER = { warn: jest.fn(), info: jest.fn(), debug: jest.fn() };
 
 it("returns a player factory", () => {
   expect(
@@ -11,7 +12,6 @@ it("returns a player factory", () => {
 });
 
 it("can't create invalid player", () => {
-  const LOGGER = { warn: jest.fn() };
   expect(
     getPlayerFactory(LOGGER)({ name: "Arale" })
   ).toBe(null);
@@ -21,7 +21,6 @@ it("can't create invalid player", () => {
 });
 
 it("create a new player", () => {
-  const LOGGER = { info: jest.fn() };
   const save = () => {};
 
   const player =

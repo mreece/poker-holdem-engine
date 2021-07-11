@@ -3,12 +3,9 @@
 "use strict";
 
 const task = require("./assign-pot");
+const LOGGER = { warn: jest.fn(), info: jest.fn(), debug: jest.fn() };
 
 describe("assign pot", () => {
-  const LOGGER = {
-    info: jest.fn(),
-  };
-
   const player =
     (name, state, chips, chipsBet) => ({
       id: name.toUpperCase(),

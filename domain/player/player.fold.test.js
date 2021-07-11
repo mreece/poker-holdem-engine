@@ -3,11 +3,9 @@
 "use strict";
 
 const getPlayerFactory = require("./create");
+const LOGGER = { warn: jest.fn(), info: jest.fn(), debug: jest.fn() };
 
 it("updates player state", async () => {
-  const LOGGER = {
-    info: jest.fn(),
-  };
   const save = jest.fn();
   const create = getPlayerFactory(LOGGER, save, { BUYIN: 100 });
 

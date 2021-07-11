@@ -66,7 +66,7 @@ it("uncover the fourth common card", async () => {
 
   const onFeed = jest.fn();
 
-  await task.run({ debug: () => {} }, { gamestate, onFeed });
+  await task.run({ debug: () => {}, info: () => {} }, { gamestate, onFeed });
 
   expect(
     require("./bet-loop")

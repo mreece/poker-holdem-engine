@@ -54,7 +54,7 @@ Task.run =
       const cards = gamestate.commonCards
         .reduce((str, card) => str + " " + card.rank + card.type, "");
 
-      LOGGER.debug(`Common cards: ${cards.trim()}.`, { tag: gamestate.handUniqueId });
+      LOGGER.info(`Common cards: ${cards.trim()}.`, { tag: gamestate.handUniqueId });
     }
   };
 

@@ -61,7 +61,7 @@ it("uncover first three common cards", async () => {
 
   const onFeed = jest.fn();
 
-  await task.run({ debug: () => {} }, { gamestate, onFeed });
+  await task.run({ debug: () => {}, info: () => {} }, { gamestate, onFeed });
 
   expect(
     require("./bet-loop")
@@ -91,7 +91,7 @@ it("doesn't uncover any cards when there's any active player", async () => {
     activePlayers: [],
   };
 
-  await task.run({ debug: () => {} }, { gamestate });
+  await task.run({ debug: () => {}, info: () => {} }, { gamestate });
 
   expect(gamestate)
     .toEqual({
