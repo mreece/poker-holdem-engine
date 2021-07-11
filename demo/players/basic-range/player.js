@@ -60,18 +60,20 @@ const river = (gamestate) => {
   return gamestate.callAmount;
 };
 
+const bet = (gamestate) => {
+  // console.log({gamestate});
+  if (isPreFlop(gamestate)) {
+    return preflop(gamestate);
+  } else if (isFlop(gamestate)) {
+    return flop(gamestate);
+  } else if (isTurn(gamestate)) {
+    return turn(gamestate);
+  } else if (isRiver(gamestate)) {
+    return river(gamestate);
+  }
+};
+
 exports = module.exports = {
   VERSION: "player-one-1.0",
-  bet: function (gamestate) {
-    // console.log({gamestate});
-    if (isPreFlop(gamestate)) {
-      return preflop(gamestate);
-    } else if (isFlop(gamestate)) {
-      return flop(gamestate);
-    } else if (isTurn(gamestate)) {
-      return turn(gamestate);
-    } else if (isRiver(gamestate)) {
-      return river(gamestate);
-    }
-  },
+  bet,
 };

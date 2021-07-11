@@ -73,7 +73,7 @@ const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
     )) {
       return false;
     }
-    console.log(riverCard, "==", newBest.rank);
+    // console.log(riverCard, "==", newBest.rank);
 
     return true;
   });

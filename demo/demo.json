@@ -1,21 +1,36 @@
 {
   "mongoUri": "mongodb://localhost:27017/store",
   "tournamentId": "574e653bbebd5a20064d08fb",
-  "players": [{
-    "id": "arale",
-    "name": "Arale",
-    "serviceUrl": "http://127.0.0.1:8080/"
-  }, {
-    "id": "bender",
-    "name": "Bender",
-    "serviceUrl": "http://127.0.0.1:8081/"
-  }, {
-    "id": "marvin",
-    "name": "Marvin",
-    "serviceUrl": "http://127.0.0.1:8082/"
-  }, {
-    "id": "r2d2",
-    "name": "R2D2",
-    "serviceUrl": "http://127.0.0.1:8083/"
-  }]
+  "players": [
+    {
+      "id": "player-one",
+      "name": "player-one",
+      "serviceUrl": "http://127.0.0.1:8080/"
+    },
+    {
+      "id": "basic-range",
+      "name": "basic-range",
+      "serviceUrl": "http://127.0.0.1:8081/"
+    },
+    {
+      "id": "always-call",
+      "name": "always-call",
+      "serviceUrl": "http://127.0.0.1:8082/"
+    },
+    {
+      "id": "always-allin",
+      "name": "always-allin",
+      "serviceUrl": "http://127.0.0.1:8083/"
+    },
+    {
+      "id": "always-fold",
+      "name": "always-fold",
+      "serviceUrl": "http://127.0.0.1:8084/"
+    },
+    {
+      "id": "always-minraise",
+      "name": "always-minraise",
+      "serviceUrl": "http://127.0.0.1:8085/"
+    }
+  ]
 }
