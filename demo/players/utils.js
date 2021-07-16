@@ -10,6 +10,9 @@ const isRiver = ({ commonCards }) => commonCards.length === 5;
 
 const flushSuit = (cards) => _.maxBy(_.toPairs(_.countBy(cards, "type")), "1")[0];
 
+const getCurrentBest = (cards) => sortByRank(getAllCombination(cards, 5))[0];
+const getCurrentStrength = (cards) => getCurrentBest(cards).rank.strength;
+
 const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
   if (isPreFlop({ commonCards })) {
     return undefined;
@@ -22,9 +25,7 @@ const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
     return "not yet implemented";
   }
 
-  const currentCombos = getAllCombination([...cards, ...commonCards], 5);
-  const currentBest = sortByRank(currentCombos)[0];
-  const currentStrength = currentBest.rank.strength;
+  const currentStrength = getCurrentStrength([...cards, ...commonCards]);
 
   const deck = _.differenceWith(CARDS, [...cards, ...commonCards], _.isEqual);
   const outs = deck.filter((riverCard) => {
@@ -86,5 +87,6 @@ module.exports = {
   isFlop,
   isTurn,
   isRiver,
+  getCurrentStrength,
   outsToImprove,
 };
