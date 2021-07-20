@@ -7,7 +7,7 @@ const preflop = (gamestate) => {
   const me = gamestate.players[gamestate.me];
   const type = handType(me.cards);
 
-  if (type.match(/p|s|[AKQJT]o/)) {
+  if (type.match(/p|s|A|[KQJT]o/)) {
     return gamestate.spinCount ? gamestate.callAmount : gamestate.pot;
   }
   return 0;
