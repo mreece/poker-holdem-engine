@@ -1,11 +1,11 @@
 const { outsToImprove } = require("../demo/players/utils");
 
 console.log(outsToImprove({
-  cards: [{ rank: "3", type: "S" }, { rank: "4", type: "D" }],
+  cards: [{ rank: "J", type: "H" }, { rank: "9", type: "H" }],
   commonCards: [
+    { rank: "J", type: "C" },
     { rank: "J", type: "D" },
-    { rank: "8", type: "S" },
-    { rank: "7", type: "S" },
-    { rank: "6", type: "S" },
+    { rank: "6", type: "H" },
   ],
+  minimumStrength: 3,
 }));

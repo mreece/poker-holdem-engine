@@ -1,38 +1,28 @@
 "use strict";
 
 const _ = require("lodash");
-const { isPreFlop, isFlop, isTurn, isRiver } = require("../utils");
-const { handType, HANDS_RANKED_HEADSUP: HANDS_RANKED } = require("../facts");
+const { isPreFlop, isFlop, isTurn, isRiver, getCurrentStrength, outsToImprove } = require("../utils");
+const { handType, HANDS_RANKED } = require("../facts");
 
 const minRangeForActiveCount = [
   "72o", // n/a
-  "72o", // n/a
-  "A2s", // 2
-  "A6s", // 3
-  "A6s", // 4
-  "A6s", // 5
-  "JTs", // 6
-  "JTs", // 7
-  "99p", // 8
-  "AKs", // 9
+  "72o", // n/a bb
+  HANDS_RANKED[70], // sb
+  HANDS_RANKED[50], // btn
+  HANDS_RANKED[35], // hj
+  HANDS_RANKED[30], // co
+  HANDS_RANKED[25],
+  HANDS_RANKED[20],
+  HANDS_RANKED[15],
+  HANDS_RANKED[10], // utg
 ];
-
-// const isGoodHoleCards = (handType) => HANDS_RANKED.indexOf(handType) <= (process.env.RANGE || HANDS_RANKED.indexOf("72o"));
-// const isGoodHoleCards = (handType) =>
-//   handType.match(/[^2]p/) ||
-//   handType.match(/A/) ||
-//   handType.match(/K[QJT987]o/) || handType.match(/K[QJT98765]s/) ||
-//   handType.match(/Q[JT]o/) || handType.match(/Q[JT98]s/) ||
-//   handType.match(/JTs/) ||
-//   false;
 
 const preflop = (gamestate) => {
   const me = gamestate.players[gamestate.me];
-  const { cards } = me;
-  const type = handType(cards);
+  const type = handType(me.cards);
 
   if (HANDS_RANKED.indexOf(type) < 0) {
-    throw new Error(handType(cards));
+    throw new Error(handType(me.cards));
   }
 
   const activePlayers = _.filter(gamestate.players, { state: "active" });
@@ -42,14 +32,27 @@ const preflop = (gamestate) => {
   const isInRange = HANDS_RANKED.indexOf(type) <= HANDS_RANKED.indexOf(minRange);
 
   if (isInRange) {
-    return me.chips;
+    if (gamestate.spinCount === 0) {
+      return Math.min(Math.floor(gamestate.minimumRaiseAmount * 1.25), me.chips);
+    }
+    return gamestate.callAmount;
   }
 
   return 0;
 };
 
 const flop = (gamestate) => {
-  return gamestate.callAmount;
+  const me = gamestate.players[gamestate.me];
+  const currentStrength = getCurrentStrength([...me.cards, ...gamestate.commonCards]);
+  const outs = outsToImprove({ cards: me.cards, commonCards: gamestate.commonCards });
+
+  if (currentStrength >= 3 || outs >= 12) {
+    return me.chips;
+  }
+  if (currentStrength >= 1 || outs >= 7) {
+    return gamestate.callAmount;
+  }
+  return 0;
 };
 
 const turn = (gamestate) => {
@@ -74,6 +77,6 @@ const bet = (gamestate) => {
 };
 
 exports = module.exports = {
-  VERSION: "player-one-1.0",
+  VERSION: "basic-range-1.0",
   bet,
 };

@@ -4,13 +4,6 @@ const { isPreFlop, isFlop, isTurn, isRiver } = require("../utils");
 const { handType, HANDS_RANKED_HEADSUP: HANDS_RANKED } = require("../facts");
 
 const isGoodHoleCards = (handType) => HANDS_RANKED.indexOf(handType) <= (process.env.RANGE || HANDS_RANKED.indexOf("T9s"));
-// const isGoodHoleCards = (handType) =>
-//   handType.match(/[^2]p/) ||
-//   handType.match(/A/) ||
-//   handType.match(/K[QJT987]o/) || handType.match(/K[QJT98765]s/) ||
-//   handType.match(/Q[JT]o/) || handType.match(/Q[JT98]s/) ||
-//   handType.match(/JTs/) ||
-//   false;
 
 const preflop = (gamestate) => {
   const cards = gamestate.players[gamestate.me].cards;
@@ -19,24 +12,22 @@ const preflop = (gamestate) => {
     throw new Error(handType(cards));
   }
   if (isGoodHoleCards(type)) {
-    // console.log("call", type, cards);
-    return gamestate.callAmount;
+    return gamestate.spinCount ? gamestate.callAmount : gamestate.minimumRaiseAmount;
   } else {
-    // console.log("fold", type, cards);
     return 0;
   }
 };
 
 const flop = (gamestate) => {
-  return gamestate.callAmount;
+  return gamestate.spinCount ? gamestate.callAmount : gamestate.minimumRaiseAmount;
 };
 
 const turn = (gamestate) => {
-  return gamestate.callAmount;
+  return gamestate.spinCount ? gamestate.callAmount : gamestate.minimumRaiseAmount;
 };
 
 const river = (gamestate) => {
-  return gamestate.callAmount;
+  return gamestate.spinCount ? gamestate.callAmount : gamestate.minimumRaiseAmount;
 };
 
 exports = module.exports = {

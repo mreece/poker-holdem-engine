@@ -13,6 +13,9 @@ const flushSuit = (cards) => _.maxBy(_.toPairs(_.countBy(cards, "type")), "1")[0
 const getCurrentBest = (cards) => sortByRank(getAllCombination(cards, 5))[0];
 const getCurrentStrength = (cards) => getCurrentBest(cards).rank.strength;
 
+const bestUsesCard = ({ best, cards }) => best.rank.rank === cards[0].rank || best.rank.rank === cards[1].rank;
+const bestIncludesCard = ({ best, cards }) => _.includes(best, cards[0]) || _.includes(best, cards[1]);
+
 const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
   if (isPreFlop({ commonCards })) {
     return undefined;
@@ -21,17 +24,14 @@ const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
     return 0;
   }
 
-  if (isFlop({ commonCards })) {
-    return "not yet implemented";
-  }
-
   const currentStrength = getCurrentStrength([...cards, ...commonCards]);
 
   const deck = _.differenceWith(CARDS, [...cards, ...commonCards], _.isEqual);
-  const outs = deck.filter((riverCard) => {
-    const newCombos = getAllCombination([...cards, ...commonCards, riverCard]);
+  const outs = deck.filter((nextCard) => {
+    const newCombos = getAllCombination([...cards, ...commonCards, nextCard]);
     const newBest = sortByRank(newCombos)[0];
     const newStrength = newBest.rank.strength;
+
     if (newStrength < minimumStrength) {
       return false;
     }
@@ -57,36 +57,22 @@ const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
       return false;
     }
 
-    // straight must include hole card
-    if (newStrength === 4 && !(
-      [cards[0].rank, cards[1].rank].includes(newBest.rank.rank) ||
-      _.intersection([cards[0].rank, cards[1].rank], newBest.rank.kickers).length
-    )) {
-      return false;
-    }
-
-    // flush must include hole card
-    if ((newStrength === 5 || newStrength === 8) && !(
-      [cards[0].type, cards[1].type].includes(flushSuit(newBest)) && (
-        [cards[0].rank, cards[1].rank].includes(newBest.rank.rank) ||
-        _.intersection([cards[0].rank, cards[1].rank], newBest.rank.kickers).length
-      )
-    )) {
-      return false;
-    }
-    // console.log(riverCard, "==", newBest.rank);
-
-    return true;
+    // other ranks must incldue hole card
+    return _.includes(newBest, cards[0]) || _.includes(newBest, cards[1]);
   });
 
   return outs.length;
 };
 
 module.exports = {
-  isPreFlop,
-  isFlop,
+  outsToImprove,
   isTurn,
   isRiver,
+  isPreFlop,
+  isFlop,
   getCurrentStrength,
-  outsToImprove,
+  getCurrentBest,
+  flushSuit,
+  bestUsesCard,
+  bestIncludesCard,
 };
