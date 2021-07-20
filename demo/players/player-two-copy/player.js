@@ -52,7 +52,7 @@ const flop = (gamestate) => {
   const currentBest = getCurrentBest([...me.cards, ...gamestate.commonCards]);
   const currentStrength = currentBest.rank.strength;
   const isMine = bestUsesCard({ best: currentBest, cards: me.cards });
-  const includesMine = bestIncludesCard({ best: getCurrentBest, cards: me.cards });
+  const includesMine = bestIncludesCard({ best: currentBest, cards: me.cards });
   const outs = outsToImprove({ cards: me.cards, commonCards: gamestate.commonCards, minimumStrength: 3 });
 
   if (currentStrength >= 4 && includesMine) {

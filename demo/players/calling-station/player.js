@@ -1,6 +1,6 @@
 "use strict";
 
-const { isPreFlop, isFlop, isTurn, isRiver, getCurrentStrength, outsToImprove } = require("../utils");
+const { bestUsesCard, bestIncludesCard, isPreFlop, isFlop, isTurn, isRiver, getCurrentBest, getCurrentStrength, outsToImprove } = require("../utils");
 const { handType } = require("../facts");
 
 const FAVORITE_HANDS = [
@@ -21,31 +21,28 @@ const preflop = (gamestate) => {
 
 const flop = (gamestate) => {
   const me = gamestate.players[gamestate.me];
+  const currentBest = getCurrentBest([...me.cards, ...gamestate.commonCards]);
   const currentStrength = getCurrentStrength([...me.cards, ...gamestate.commonCards]);
+  const isMine = bestUsesCard({ best: currentBest, cards: me.cards });
+  const includesMine = bestIncludesCard({ best: currentBest, cards: me.cards });
   const outs = outsToImprove({ cards: me.cards, commonCards: gamestate.commonCards, minimumStrength: 3 });
-  if (currentStrength >= 1 || outs >= 4) {
+
+  if (
+    (currentStrength >= 4 && includesMine) ||
+    (currentStrength >= 1 && isMine) ||
+    (outs >= 4)
+  ) {
     return gamestate.callAmount;
   }
   return 0;
 };
 
 const turn = (gamestate) => {
-  const me = gamestate.players[gamestate.me];
-  const currentStrength = getCurrentStrength([...me.cards, ...gamestate.commonCards]);
-  const outs = outsToImprove({ cards: me.cards, commonCards: gamestate.commonCards, minimumStrength: 3 });
-  if (currentStrength >= 1 || outs >= 4) {
-    return gamestate.callAmount;
-  }
-  return 0;
+  return flop(gamestate);
 };
 
 const river = (gamestate) => {
-  const me = gamestate.players[gamestate.me];
-  const currentStrength = getCurrentStrength([...me.cards, ...gamestate.commonCards]);
-  if (currentStrength >= 1) {
-    return gamestate.callAmount;
-  }
-  return 0;
+  return flop(gamestate);
 };
 
 exports = module.exports = {

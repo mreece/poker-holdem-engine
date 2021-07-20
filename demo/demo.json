@@ -3,8 +3,8 @@
   "tournamentId": "574e653bbebd5a20064d08fb",
   "players": [
     {
-      "id": "player-two-copy",
-      "name": "player-two-copy",
+      "id": "maniac",
+      "name": "maniac",
       "serviceUrl": "http://127.0.0.1:8081/"
     },
     {
@@ -30,22 +30,22 @@
     {
       "id": "basic-range",
       "name": "basic-range",
-      "serviceUrl": "http://127.0.0.1:8085/"
+      "serviceUrl": "http://127.0.0.1:8086/"
     },
     {
       "id": "player-one",
       "name": "player-one",
-      "serviceUrl": "http://127.0.0.1:8085/"
+      "serviceUrl": "http://127.0.0.1:8087/"
     },
     {
       "id": "player-two",
       "name": "player-two",
-      "serviceUrl": "http://127.0.0.1:8086/"
+      "serviceUrl": "http://127.0.0.1:8088/"
     },
     {
       "id": "mbr",
       "name": "mbr",
-      "serviceUrl": "http://127.0.0.1:8086/"
+      "serviceUrl": "http://127.0.0.1:8089/"
     }
   ]
 }
