@@ -3,8 +3,8 @@
   "tournamentId": "574e653bbebd5a20064d08fb",
   "players": [
     {
-      "id": "always-allin",
-      "name": "always-allin",
+      "id": "player-two-copy",
+      "name": "player-two-copy",
       "serviceUrl": "http://127.0.0.1:8081/"
     },
     {
@@ -13,14 +13,24 @@
       "serviceUrl": "http://127.0.0.1:8082/"
     },
     {
-      "id": "always-fold",
-      "name": "always-fold",
+      "id": "the-mouse",
+      "name": "the-mouse",
       "serviceUrl": "http://127.0.0.1:8083/"
     },
     {
       "id": "always-minraise",
       "name": "always-minraise",
       "serviceUrl": "http://127.0.0.1:8084/"
+    },
+    {
+      "id": "calling-station",
+      "name": "calling-station",
+      "serviceUrl": "http://127.0.0.1:8085/"
+    },
+    {
+      "id": "basic-range",
+      "name": "basic-range",
+      "serviceUrl": "http://127.0.0.1:8085/"
     },
     {
       "id": "player-one",
@@ -30,6 +40,11 @@
     {
       "id": "player-two",
       "name": "player-two",
+      "serviceUrl": "http://127.0.0.1:8086/"
+    },
+    {
+      "id": "mbr",
+      "name": "mbr",
       "serviceUrl": "http://127.0.0.1:8086/"
     }
   ]

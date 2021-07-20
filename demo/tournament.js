@@ -42,13 +42,13 @@ process.on("message", (msg) => {
               score[row.playerName] ||= 0;
               score[row.playerName] += row.points;
             });
-            console.log("score", gameCount, ":", Object.keys(score).sort((a, b) => score[b] - score[a]).slice(0, 6).map((player) => `\t${player} ${score[player]}`).join(" "));
+            console.log("score", gameCount, ":", Object.keys(score).sort((a, b) => score[b] - score[a]).slice(0, 9).map((player) => `\t${player} ${score[player]}`).join(" "));
             console.log("************************");
           },
           async onTournamentComplete (data) {
             console.log("**** Completed ****");
             const winner = Object.keys(score).sort((a, b) => ((score[b] - score[a]) || (a > b ? 1 : -1)))[0];
-            console.log("final score", gameCount, ":", Object.keys(score).sort().slice(0, 6).map((player) => `\t${player} ${score[player]}`).join(" "), winner === "player-one" ? " ***" : "");
+            console.log("final score", gameCount, ":", Object.keys(score).sort().slice(0, 9).map((player) => `\t${player} ${score[player]}`).join(" "), winner === "player-one" ? " ***" : "");
             quit();
           },
         }

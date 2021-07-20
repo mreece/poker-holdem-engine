@@ -80,7 +80,7 @@ const river = (gamestate) => {
 };
 
 exports = module.exports = {
-  VERSION: "player-two-1.0",
+  VERSION: "player-two-copy-1.0",
   bet: function (gamestate) {
     if (isPreFlop(gamestate)) {
       return preflop(gamestate);
