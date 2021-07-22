@@ -57,7 +57,8 @@ const makePostFlopTask =
 
           await tournament.onFeed(gamestate);
 
-          LOGGER.info(`New common card: ${card.rank + card.type}.`, { tag: gamestate.handUniqueId });
+          const street = gamestate.commonCards.length === 5 ? "RIVER" : "TURN";
+          LOGGER.info(`New common card (${street}): ${card.rank + card.type}.`, { tag: gamestate.handUniqueId });
         }
       };
 

@@ -44,6 +44,7 @@ process.on("message", (msg) => {
             });
             console.log("score", gameCount, ":", Object.keys(score).sort((a, b) => score[b] - score[a]).slice(0, 9).map((player) => `\t${player} ${score[player]}`).join(" "));
             console.log("************************");
+            this.gamestate.players = shuffleArray(this.gamestate.players.slice());
           },
           async onTournamentComplete (data) {
             console.log("**** Completed ****");
