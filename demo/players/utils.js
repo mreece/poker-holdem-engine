@@ -16,6 +16,20 @@ const getCurrentStrength = (cards) => getCurrentBest(cards).rank.strength;
 const bestUsesCard = ({ best, cards }) => best.rank.rank === cards[0].rank || best.rank.rank === cards[1].rank;
 const bestIncludesCard = ({ best, cards }) => _.includes(best, cards[0]) || _.includes(best, cards[1]);
 
+const offsetFromDealer = (gamestate) => {
+  const { players } = gamestate;
+  const dealer = gamestate.players[gamestate.dealer];
+  const me = gamestate.players[gamestate.me];
+
+  const activePlayers = _.filter(players, { state: "active" });
+  const activeMeIndex = _.findIndex(activePlayers, { id: me.id });
+  const activeDealerIndex = _.findIndex(activePlayers, { id: dealer.id });
+
+  return activeDealerIndex <= activeMeIndex
+    ? activeMeIndex - activeDealerIndex
+    : activeDealerIndex - activeMeIndex - activePlayers.length;
+};
+
 const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
   if (isPreFlop({ commonCards })) {
     return undefined;
@@ -75,4 +89,5 @@ module.exports = {
   flushSuit,
   bestUsesCard,
   bestIncludesCard,
+  offsetFromDealer,
 };
