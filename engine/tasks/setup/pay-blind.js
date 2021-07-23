@@ -24,6 +24,8 @@ Task.run =
 
     gamestate.players[indexBB].pay(gamestate, 2 * gamestate.sb);
     gamestate.players[indexBB].bigBlind = true;
+    LOGGER.info(`${gamestate.players[indexSB].name} pays the small blind.`, { tag: gamestate.handUniqueId });
+    LOGGER.info(`${gamestate.players[indexBB].name} pays the big blind.`, { tag: gamestate.handUniqueId });
   };
 
 module.exports = Task;

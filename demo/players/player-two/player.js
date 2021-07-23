@@ -38,12 +38,12 @@ const preflop = (gamestate) => {
   const minActiveCount = Number(_.findKey(handsForActiveCount, hands => hands.includes(type)));
   if (activePlayersCount <= minActiveCount) {
     if (gamestate.spinCount === 0) {
-      console.log("raise", me.cards);
+      // console.log("raise", me.cards);
       return Math.min(Math.floor(gamestate.minimumRaiseAmount * 1.25), me.chips);
     }
     return gamestate.callAmount;
   }
-  console.log("fold", me.cards);
+  // console.log("fold", me.cards);
   return 0;
 };
 

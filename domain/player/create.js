@@ -62,7 +62,7 @@ module.exports =
        * A player who have folded can't bet further
        * in the current hand.
        * @name
-       * @name pay
+       * @name fold
        * @param {Object} gamestate
        */
       async fold (gamestate) {
@@ -156,7 +156,7 @@ module.exports =
 
         await save(gamestate);
 
-        const action = amount === playerCallAmount ? "calls" : "raises";
+        const action = amount <= playerCallAmount ? "calls" : "raises";
 
         LOGGER.info(`${this.name} ${action} ${amount}.`, { tag: gamestate.handUniqueId });
       },
