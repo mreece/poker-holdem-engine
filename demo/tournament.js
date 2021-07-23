@@ -39,7 +39,7 @@ process.on("message", (msg) => {
             console.log(`**** Game completed ${gameCount} ****`);
             console.log(chart);
             chart.forEach(row => {
-              score[row.playerName] ||= 0;
+              score[row.playerName] = score[row.playerName] || 0;
               score[row.playerName] += row.points;
             });
             console.log("score", gameCount, ":", Object.keys(score).sort((a, b) => score[b] - score[a]).slice(0, 9).map((player) => `\t${player} ${score[player]}`).join(" "));
