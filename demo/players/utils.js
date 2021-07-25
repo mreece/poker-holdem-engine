@@ -17,17 +17,19 @@ const bestUsesCard = ({ best, cards }) => best.rank.rank === cards[0].rank || be
 const bestIncludesCard = ({ best, cards }) => _.includes(best, cards[0]) || _.includes(best, cards[1]);
 
 const offsetFromDealer = (gamestate) => {
-  const { players } = gamestate;
-  const dealer = gamestate.players[gamestate.dealer];
+  const players = [...gamestate.players];
   const me = gamestate.players[gamestate.me];
 
+  // Order players from [sb, ..., button]
+  _.times((gamestate.dealer + 1) % players.length, () => {
+    players.push(players.shift());
+  });
+
+  // Calculate offset from effective button
   const activePlayers = _.filter(players, { state: "active" });
   const activeMeIndex = _.findIndex(activePlayers, { id: me.id });
-  const activeDealerIndex = _.findIndex(activePlayers, { id: dealer.id });
 
-  return activeDealerIndex <= activeMeIndex
-    ? activeMeIndex - activeDealerIndex
-    : activeDealerIndex - activeMeIndex - activePlayers.length;
+  return activePlayers.length - activeMeIndex - 1;
 };
 
 const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
@@ -78,6 +80,17 @@ const outsToImprove = ({ cards, commonCards, minimumStrength = 1 }) => {
   return outs.length;
 };
 
+const hasNuts = ({ cards, commonCards }) => {
+  const myBest = getCurrentBest([...cards, ...commonCards]);
+  const deck = _.differenceWith(CARDS, [...cards, ...commonCards], _.isEqual);
+  const otherPossibleHoleCards = getAllCombination(deck, 2);
+  return _.every(otherPossibleHoleCards, (villianCards) => {
+    const villianBest = getCurrentBest([...villianCards, ...commonCards]);
+    const winner = sortByRank([myBest, villianBest])[0];
+    return _.isEqual(winner, myBest);
+  });
+};
+
 module.exports = {
   outsToImprove,
   isTurn,
@@ -90,4 +103,5 @@ module.exports = {
   bestUsesCard,
   bestIncludesCard,
   offsetFromDealer,
+  hasNuts,
 };
