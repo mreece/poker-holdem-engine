@@ -2,6 +2,7 @@ const _ = require("lodash");
 const CARDS = require("@botpoker/cards");
 const getAllCombination = require("@botpoker/all-combs");
 const sortByRank = require("@botpoker/rank-hands");
+const sortCards = require("@botpoker/hand/lib/utils/sort-by-rank");
 
 const isPreFlop = ({ commonCards }) => commonCards.length === 0;
 const isFlop = ({ commonCards }) => commonCards.length === 3;
@@ -15,6 +16,9 @@ const getCurrentStrength = (cards) => getCurrentBest(cards).rank.strength;
 
 const bestUsesCard = ({ best, cards }) => best.rank.rank === cards[0].rank || best.rank.rank === cards[1].rank;
 const bestIncludesCard = ({ best, cards }) => _.includes(best, cards[0]) || _.includes(best, cards[1]);
+const isTop = (best) => best.rank.rank === sortCards([...best])[0].rank;
+
+const shortName = (cards) => cards.map(({ rank, type }) => `${rank}${type.toLowerCase()}`).join(" ");
 
 const offsetFromDealer = (gamestate) => {
   const players = [...gamestate.players];
@@ -100,8 +104,10 @@ module.exports = {
   getCurrentStrength,
   getCurrentBest,
   flushSuit,
+  isTop,
   bestUsesCard,
   bestIncludesCard,
   offsetFromDealer,
   hasNuts,
+  shortName,
 };

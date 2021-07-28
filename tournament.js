@@ -116,11 +116,10 @@ class Tournament {
     this.state = States.get("active");
 
     return loop.call(this, LOGGER)
-      .then(
-        () => {
-          this.onTournamentComplete({ tournamentId: this.id });
-        }
-      );
+      .catch(err => console.error(err))
+      .finally(() => {
+        this.onTournamentComplete({ tournamentId: this.id });
+      });
   }
 
   pause () {

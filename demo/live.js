@@ -5,7 +5,7 @@ const path = require("path");
 
 const chalk = require("chalk");
 
-const config = require("./demo.json");
+const config = require("./demo-config");
 
 const [shouldRunTournament] = process.argv.slice(2);
 
@@ -13,6 +13,9 @@ const launchBotServices =
   () => {
     config.players.forEach(
       (player) => {
+        if (!player.serviceUrl) {
+          return;
+        }
         const port = player.serviceUrl.match(/:([\d]{4})\/$/)[1];
         const childWorkingDirectory = path.resolve(process.cwd(), "demo", "players", player.name);
 

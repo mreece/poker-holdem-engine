@@ -3,7 +3,7 @@
   "WARMUP": false,
   "WARMUP_GAME": 10,
   "WARMUP_TIME": 10,
-  "HAND_THROTTLE_TIME": 0.01,
+  "HAND_THROTTLE_TIME": 0,
   "SMALL_BLINDS": [
     10, 15, 25, 40,
     60, 75, 100, 150,
@@ -16,7 +16,7 @@
   ],
   "SMALL_BLINDS_PERIOD": 10,
   "PAY_ANTE_AT_HAND": 1,
-  "MAX_GAMES": 100,
+  "MAX_GAMES": 1000,
   "POINTS": [
     [ 39, 21, -10, -10, -10, -10 ],
     [ 35, 17, 8, -10, -10, -10, -10, -10, -10 ]

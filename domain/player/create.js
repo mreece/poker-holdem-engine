@@ -265,6 +265,11 @@ module.exports =
 
         payload.me = gamestate.players.findIndex((player) => player.id === this.id);
 
+        if (!this.serviceUrl) {
+          return Promise.resolve(this.getBet(payload))
+            .then(bet => Math.min(this.chips, sanitizeAmount(bet)));
+        }
+
         return new Promise((resolve) => {
           send.post(this.serviceUrl + "bet", {
             body: payload,
@@ -355,7 +360,8 @@ module.exports =
  * @returns {Boolean}
  */
 const isValidPlayer =
-  (player) => player.id && player.name && player.serviceUrl;
+  (player) => player.id && player.name &&
+    (player.serviceUrl || typeof player.getBet === "function");
 
 /**
  * Check if the value is a valid bet amount,

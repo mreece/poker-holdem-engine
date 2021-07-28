@@ -1,6 +1,6 @@
 "use strict";
 
-const config = require("./demo.json");
+const config = require("./demo-config");
 const tournamentSettings = require("./tournament-settings.json");
 
 const Tournament = require("../tournament");
