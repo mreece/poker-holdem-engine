@@ -28,7 +28,7 @@ describe("run", () => {
       sb: 10,
     };
 
-    task.run(null, { gamestate });
+    task.run({ info: () => {} }, { gamestate });
 
     expect(paySB).toHaveBeenCalledTimes(1);
     expect(paySB).toHaveBeenNthCalledWith(1, gamestate, 10);

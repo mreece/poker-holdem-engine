@@ -48,7 +48,7 @@ describe("run", () => {
 
     gamestate.players[0].assignDealerButton();
     gamestate.dealerPosition = 0;
-    gamestate.players[1].state = "fold";
+    gamestate.players[1].state = "out";
 
     task.run(null, { gamestate });
 
