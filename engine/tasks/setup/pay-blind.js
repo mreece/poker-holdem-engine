@@ -16,7 +16,10 @@ Task.run =
     const bb = sb * 2;
     LOGGER.info(`Blinds are ${sb}/${bb} (${ante})`, { tag: gamestate.handUniqueId });
 
-    const indexSB = nextActive(gamestate.players, gamestate.dealerPosition);
+    const playersCount = gamestate.players.filter(({ state }) => state !== "out").length;
+    const indexSB = playersCount === 2
+      ? gamestate.dealerPosition // button pays small blind heads up
+      : nextActive(gamestate.players, gamestate.dealerPosition);
 
     gamestate.players[indexSB].pay(gamestate, gamestate.sb);
 
