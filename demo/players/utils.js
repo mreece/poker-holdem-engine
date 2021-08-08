@@ -91,7 +91,7 @@ const hasNuts = ({ cards, commonCards }) => {
   return _.every(otherPossibleHoleCards, (villianCards) => {
     const villianBest = getCurrentBest([...villianCards, ...commonCards]);
     const winner = sortByRank([myBest, villianBest])[0];
-    return _.isEqual(winner, myBest);
+    return _.isEqual(winner, myBest) || winner.exequo;
   });
 };
 
